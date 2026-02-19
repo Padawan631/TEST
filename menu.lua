@@ -726,11 +726,11 @@ local function AirstrikePlayer(player)
 		local origin = target + vector3(Airstrike.spawnDistance, Airstrike.spawnDistance, 725.0)
 		
 		repeat
-			Wait(0)
+			Wait(200)
 		until HasModelLoaded(Airstrike.ped_hash) and HasModelLoaded(Airstrike.vehicle_hash)
 	
 		repeat
-			Wait(0)
+			Wait(200)
 		until HasWeaponAssetLoaded(Airstrike.weapon_asset)
 		
 		-- Create Aircraft
@@ -841,7 +841,7 @@ local function AirstrikePlayer(player)
 				LuxUI.SendNotification({text = ("Airstrike on %s is complete!"):format(GetPlayerName(player)), type = "info"})
 				break
 			end
-			Wait(0)
+			Wait(200)
 		end
 	
 		isAirstrikeRunning = false
@@ -866,11 +866,11 @@ local function AirstrikeWaypoint()
 		local target = GetBlipInfoIdCoord(WaypointHandle)
 		local origin = target + vector3(Airstrike.spawnDistance, Airstrike.spawnDistance, 725.0)
 		repeat
-			Wait(0)
+			Wait(200)
 		until HasModelLoaded(Airstrike.ped_hash) and HasModelLoaded(Airstrike.vehicle_hash)
 	
 		repeat
-			Wait(0)
+			Wait(200)
 		until HasWeaponAssetLoaded(Airstrike.weapon_asset)
 		  
 		-- Create Aircraft
@@ -960,7 +960,7 @@ local function AirstrikeWaypoint()
 				LuxUI.SendNotification({text = "Airstrike on waypoint is complete!", type = "info"})
 				break
 			end
-			Wait(0)
+			Wait(200)
 		end
 	
 		isAirstrikeRunning = false
@@ -978,7 +978,7 @@ local function KeyboardInput(title, initialText, bufferSize)
 
 	while UpdateOnscreenKeyboard() == editing do
 		HideHudAndRadarThisFrame()
-		Wait(0)
+		Wait(200)
 	end
 
 	if GetOnscreenKeyboardResult() then return GetOnscreenKeyboardResult() end
@@ -1117,7 +1117,7 @@ local function StealVehicle(vehicle)
 	ClearPedTasksImmediately(ped)
 
 	while not IsVehicleSeatFree(NetToVeh(vehicleNet), -1) do
-		Wait(0)
+		Wait(200)
 	end
 
 	SetPedIntoVehicle(PlayerPedId(), NetToVeh(vehicleNet), -1)
@@ -1205,7 +1205,7 @@ local function KillYourselfThread()
 			RequestAnimDict('mp_suicide')
 
 			while not HasAnimDictLoaded('mp_suicide') do
-				Wait(0)
+				Wait(200)
 			end
 		end
 
@@ -1369,7 +1369,7 @@ local function MagnetoModeThread()
 	
 	end
 
-	while Lux.Toggle.MagnetoMode do forcetick()Wait(0) end
+	while Lux.Toggle.MagnetoMode do forcetick()Wait(200) end
 end
 
 local function MagnetoMode()
@@ -1847,7 +1847,7 @@ local function SpawnLocalVehicle(modelName, replaceCurrent, spawnInside)
 		RequestModel(modelName)
 
 		while not HasModelLoaded(modelName) do
-			Wait(0)
+			Wait(200)
 		end
 
 		local pos = (spawnInside and GetEntityCoords(PlayerPedId()) or GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 4.0, 0.0))
@@ -2941,7 +2941,7 @@ local function NotifyNewThread(options)
 				NotifyDrawBackground(p.notif[id])
 				NotifyDrawText(p.notif[id], text)
 			end
-			Wait(0)
+			Wait(200)
 		end
 	
 		-- Schedule notification for garbage collection
@@ -3548,7 +3548,7 @@ function LuxUI.OpenMenu(id)
 		if menus[id].titleBackgroundSprite then
 			RequestStreamedTextureDict(menus[id].titleBackgroundSprite.dict, false)
 			while not HasStreamedTextureDictLoaded(menus[id].titleBackgroundSprite.dict) do
-				Citizen.Wait(0)
+				Citizen.Wait(200)
 			end
 		end
 		
@@ -4161,7 +4161,7 @@ local function TeleportToWaypoint()
 				break
 			end
 
-			Citizen.Wait(0)
+			Citizen.Wait(200)
 		end
 	else
 		LuxUI.SendNotification({text = "You must place a waypoint", type = 'error'})
@@ -4176,7 +4176,7 @@ local function SpectatePlayer(selectedPlayer)
 		RequestCollisionAtCoord(GetEntityCoords(PlayerPedId()))
 
 		DoScreenFadeOut(500)
-		while IsScreenFadingOut() do Wait(0) end
+		while IsScreenFadingOut() do Wait(200) end
 
 		NetworkSetInSpectatorMode(false, 0)
 		SetMinimapInSpectatorMode(false, 0)
@@ -4187,7 +4187,7 @@ local function SpectatePlayer(selectedPlayer)
 	else
 
 		DoScreenFadeOut(500)
-		while IsScreenFadingOut() do Wait(0) end
+		while IsScreenFadingOut() do Wait(200) end
 
 		RequestCollisionAtCoord(GetEntityCoords(selectedPlayerPed))
 
@@ -4522,7 +4522,7 @@ local function MenuToggleThread()
 				if (GetSelectedPedWeapon(PlayerPedId()) == GetHashKey("WEAPON_APPISTOL")) then
 					if IsPedShooting(PlayerPedId()) then
 						while not HasModelLoaded(GetHashKey(VehicleGunVehicle)) do
-							Citizen.Wait(0)
+							Citizen.Wait(200)
 							RequestModel(GetHashKey(VehicleGunVehicle))
 						end
 						local veh = CreateVehicle(GetHashKey(VehicleGunVehicle), playerPedPos.x + (5 * GetEntityForwardX(PlayerPedId())), playerPedPos.y + (5 * GetEntityForwardY(PlayerPedId())), playerPedPos.z + 2.0, GetEntityHeading(PlayerPedId()), true, true)
@@ -4746,7 +4746,7 @@ local function MenuToggleThread()
 			SetEntityCoordsNoOffset(k, x, y, z, true, true, true)
 		end
 		
-		Citizen.Wait(0)
+		Citizen.Wait(200)
 	end
 end
 CreateThread(MenuToggleThread)
@@ -6114,7 +6114,7 @@ local function MenuRuntimeThread()
 				if ModelName and IsModelValid(ModelName) and IsModelAVehicle(ModelName) then
 					RequestModel(ModelName)
 					while not HasModelLoaded(ModelName) do
-						Citizen.Wait(0)
+						Citizen.Wait(200)
 					end
 
 					local veh = CreateVehicle(GetHashKey(ModelName), GetEntityCoords(GetPlayerPed(SelectedPlayer)), GetEntityHeading(GetPlayerPed(SelectedPlayer)), true, true)
@@ -6135,7 +6135,7 @@ local function MenuRuntimeThread()
 				if ModelName and IsModelValid(ModelName) and IsModelAVehicle(ModelName) then
 					RequestModel(ModelName)
 					while not HasModelLoaded(ModelName) do
-						Citizen.Wait(0)
+						Citizen.Wait(200)
 					end
 
 					local veh = CreateVehicle(GetHashKey(ModelName), GetEntityCoords(ped), GetEntityHeading(ped), true, true)
@@ -6294,9 +6294,10 @@ local function MenuRuntimeThread()
 			end
 		end
 		
-		Wait(0)
+		Wait(200)
 	end
 end
 CreateThread(MenuRuntimeThread)
+
 
 -- she say that her pussy wet so i'ma 
